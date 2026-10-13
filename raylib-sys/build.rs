@@ -607,6 +607,7 @@ fn link(platform: Platform, platform_os: PlatformOS) {
             println!("cargo:rustc-link-lib=framework=IOKit");
             println!("cargo:rustc-link-lib=framework=CoreFoundation");
             println!("cargo:rustc-link-lib=framework=CoreVideo");
+            println!("cargo:rustc-link-lib=framework=QuartzCore");
         }
         _ => (),
     }

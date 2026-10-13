@@ -406,11 +406,13 @@ impl Image {
         tint: impl Into<ffi::Color>,
     ) {
         unsafe {
-            ffi::ImageDraw(
+            ffi::ImageDrawImagePro(
                 &mut self.0,
                 src.0,
                 src_rec.into(),
                 dst_rec.into(),
+                ffi::Vector2 { x: 0.0, y: 0.0 },
+                0.0,
                 tint.into(),
             );
         }
@@ -508,7 +510,7 @@ impl Image {
         c3: impl Into<ffi::Color>,
     ) {
         unsafe {
-            ffi::ImageDrawTriangleEx(
+            ffi::ImageDrawTriangleGradient(
                 &mut self.0,
                 v1.into(),
                 v2.into(),
@@ -635,7 +637,7 @@ impl Image {
         color: impl Into<ffi::Color>,
     ) {
         unsafe {
-            ffi::ImageDrawRectangleLines(&mut self.0, rec.into(), thickness, color.into());
+            ffi::ImageDrawRectangleLinesEx(&mut self.0, rec.into(), thickness, color.into());
         }
     }
 
@@ -745,7 +747,7 @@ impl Image {
 
     /// Adjusts the contrast of `image`.
     #[inline]
-    pub fn color_contrast(&mut self, contrast: f32) {
+    pub fn color_contrast(&mut self, contrast: i32) {
         unsafe {
             ffi::ImageColorContrast(&mut self.0, contrast);
         }

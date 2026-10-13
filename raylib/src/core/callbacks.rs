@@ -9,7 +9,7 @@ use std::{
     mem::{size_of, transmute},
     pin::Pin,
     ptr::null_mut,
-    slice::from_raw_parts_mut,
+    slice::from_raw_parts,
     sync::atomic::{AtomicUsize, Ordering},
 };
 mod stream_processor_with_user_data_wrapper;
@@ -87,12 +87,12 @@ pub unsafe extern "C" fn custom_trace_log_callback(level: TraceLogLevel, text: *
 
 extern "C" fn custom_save_file_data_callback(
     path: *const c_char,
-    buffer: *mut c_void,
+    buffer: *const c_void,
     size: c_int,
 ) -> bool {
     let save_file_data = save_file_data_callback().expect("no callback");
     let path = unsafe { CStr::from_ptr(path) };
-    let buffer = unsafe { from_raw_parts_mut(buffer as *mut u8, size as usize) };
+    let buffer = unsafe { from_raw_parts(buffer as *const u8, size as usize) };
 
     save_file_data(path.to_str().expect("path is non utf-8"), buffer)
 }

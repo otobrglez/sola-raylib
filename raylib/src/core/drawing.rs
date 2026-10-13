@@ -1615,7 +1615,7 @@ pub trait RaylibDraw {
         p3: Vector2,
         t: f32,
     ) -> Vector2 {
-        unsafe { ffi::GetSplinePointBezierQuad(p1.into(), c2.into(), p3.into(), t).into() }
+        unsafe { ffi::GetSplinePointBezierQuadratic(p1.into(), c2.into(), p3.into(), t).into() }
     }
 
     fn get_spline_point_bezier_cubic(
@@ -1938,8 +1938,8 @@ pub trait RaylibDraw3D {
                 start_pos.into(),
                 end_pos.into(),
                 radius,
-                slices,
                 rings,
+                slices,
                 color.into(),
             )
         }
@@ -1960,8 +1960,8 @@ pub trait RaylibDraw3D {
                 start_pos.into(),
                 end_pos.into(),
                 radius,
-                slices,
                 rings,
+                slices,
                 color.into(),
             )
         }
