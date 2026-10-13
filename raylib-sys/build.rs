@@ -474,7 +474,11 @@ fn configure_windows_msvc_env(target: &str) {
         return;
     };
 
-    for (key, value) in tool.env() {
+    // `Tool::env` is deprecated since cc 1.7 in favour of `get_envs`, which
+    // older cc releases in our `cc = "1.0"` range do not have.
+    #[allow(deprecated)]
+    let envs = tool.env();
+    for (key, value) in envs {
         if key.to_string_lossy().eq_ignore_ascii_case("path") {
             let mut combined = value.clone();
             if let Some(existing) = env::var_os("PATH") {
